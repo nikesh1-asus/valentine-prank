@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine Special 💖</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+  }
+
+  .box {
+    text-align: center;
+    z-index: 2;
+  }
+
+  h1 {
+    color: white;
+    margin-bottom: 30px;
+  }
+
+  button {
+    padding: 14px 32px;
+    font-size: 18px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+  }
+
+  #yes {
+    background: #ff0055;
+    color: white;
+  }
+
+  #no {
+    background: #333;
+    color: white;
+    position: absolute;
+  }
+
+  .valentine {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .valentine img {
+    width: 200px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+
+  .heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 24px;
+    animation: float 6s linear infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h1 id="text">Do you like me? 💕</h1>
+  <button id="yes">YES 💘</button>
+  <button id="no">NO</button>
+
+  <div class="valentine" id="valentine">
+    <h1>💖 Will you be my Valentine? 💖</h1>
+    <img src="images.jfif" alt="Valentine">
+    <img src="image.jfif" alt="Love">
+  </div>
+</div>
+
+<script>
+  const noBtn = document.getElementById("no");
+  const yesBtn = document.getElementById("yes");
+  const text = document.getElementById("text");
+  const valentine = document.getElementById("valentine");
+
+  let angle = 0;
+  let radius = 120;
+
+  document.addEventListener("mousemove", (e) => {
+    const rect = noBtn.getBoundingClientRect();
+    const dx = e.clientX - (rect.left + rect.width / 2);
+    const dy = e.clientY - (rect.top + rect.height / 2);
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance < 120) {
+      angle += 0.4;
+      noBtn.style.left = e.clientX + radius * Math.cos(angle) + "px";
+      noBtn.style.top = e.clientY + radius * Math.sin(angle) + "px";
+    }
+  });
+
+  yesBtn.addEventListener("click", () => {
+    text.style.display = "none";
+    yesBtn.style.display = "none";
+    noBtn.style.display = "none";
+    valentine.style.display = "flex";
+    startHearts();
+  });
+
+  function startHearts() {
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 7000);
+    }, 300);
+  }
+</script>
+
+</body>
+</html>
